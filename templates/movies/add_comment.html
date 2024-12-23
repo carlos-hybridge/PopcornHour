@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Agregar Comentario{% endblock %}
+
+{% block content %}
+<h3>Danos tu opinión sobre el "{{ movie.title }}"</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Agregar Comentario</button>
+</form>
+{% endblock %}

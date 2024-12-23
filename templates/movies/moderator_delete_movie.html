@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <h2>¿Estás seguro de que quieres eliminar la película "{{ movie.title }}"?</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit">Sí, eliminar</button>
+        </form>
+        <a href="{% url 'moderator_dashboard' %}">Cancelar</a>
+    </div>
+{% endblock %}

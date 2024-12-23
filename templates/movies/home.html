@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <h1>Películas</h1>
+    {% for movie in movies %}
+        <div>
+            <img src="{{ movie.image.url }}" alt="{{ movie.title }}" width="100">
+            <h3>{{ movie.title }} ({{ movie.year }})</h3>
+            <p>{{ movie.description }}</p>
+            <h4>Comentarios:</h4>
+            <ul>
+                {% for comment in movie.comments %}
+                    <strong>{{ comment.username }}:</strong>
+                    <ul>
+                        <p>{{ comment.text }}</p>
+                    </ul>
+                {% endfor %}
+            </ul>
+            <a href="{% url 'add_comment' movie.id %}">Comentar</a>
+            <br>
+            <br>
+        </div>
+    {% endfor %}
+{% endblock %}
