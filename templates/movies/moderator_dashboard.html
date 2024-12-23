@@ -5,6 +5,9 @@
 {% block content %}
     <h1>Gestión de Películas</h1>
     <a href="{% url 'add_movie' %}">Agregar Película</a>
+    <br/>
+    <br/>
+    <br/>
     <table>
         <tr>
             <th>Título</th>
@@ -13,13 +16,14 @@
             <th>Acciones</th>
         </tr>
         {% for movie in movies %}
-            <tr>
-                <td>{{ movie.title }}</td>
-                <td>{{ movie.genre }}</td>
-                <td>{{ movie.year }}</td>
-                <td>
+            <tr {% if movie.deleted_at %}style="background-color: red;"{% endif %}>
+                <td class="px-3">{{  movie.title }}</td>
+                <td class="px-3">{{  movie.genre }}</td>
+                <td class="px-3">{{  movie.year }}</td>
+                <td class="px-3">
                     <a href="{% url 'edit_movie' movie.id %}">Editar</a> |
-                    <a href="{% url 'delete_movie' movie.id %}">Eliminar</a>
+                    <a href="{% url 'delete_movie' movie.id %}">Eliminar</a> |
+                    <a href="{% url 'restore_movie' movie.id %}">Restaurar</a>
                 </td>
             </tr>
         {% endfor %}

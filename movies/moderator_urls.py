@@ -19,4 +19,6 @@ urlpatterns = [
 
     # URL para eliminar una película
     path('delete/<int:movie_id>/', views.delete_movie, name='delete_movie'),
+
+    path('restore/<int:movie_id>/', views.restore_movie, name='restore_movie')
 ]

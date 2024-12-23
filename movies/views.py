@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+from django.utils import timezone
 from django.http import HttpResponseForbidden
 from .models import Movie, Comment, Rating
 from users.models import RoleUser
@@ -119,7 +120,7 @@ def edit_movie(request, movie_id):
             return redirect('moderator_dashboard')
     else:
         form = MovieRegisterForm(instance=movie)
-    return render(request, 'movies/edit_movie.html', {'form': form})
+    return render(request, 'movies/moderator_edit_movie.html', {'form': form})
 
 
 @login_required
@@ -127,7 +128,15 @@ def delete_movie(request, movie_id):
     if not request.user.is_staff:
         return HttpResponseForbidden()
     movie = get_object_or_404(Movie, pk=movie_id)
-    # movie.deleted_at = timezone.now()
+    movie.deleted_at = timezone.now()
+    movie.save()
+    return redirect('moderator_dashboard')
+
+def restore_movie(request, movie_id):
+    if not request.user.is_staff:
+        return HttpResponseForbidden()
+    movie = get_object_or_404(Movie, pk=movie_id, deleted_at__isnull=False)
+    movie.deleted_at = None
     movie.save()
     return redirect('moderator_dashboard')
 
